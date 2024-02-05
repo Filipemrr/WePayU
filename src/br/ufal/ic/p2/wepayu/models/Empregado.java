@@ -1,6 +1,6 @@
 package br.ufal.ic.p2.wepayu.models;
 
-import br.ufal.ic.p2.wepayu.Exception.NaoExisteException;
+import br.ufal.ic.p2.wepayu.Exception.EmpregadoException;
 
 public class Empregado {
     private String nome;
@@ -12,14 +12,14 @@ public class Empregado {
 
 
 
-    public Empregado(String nome, String endereco, String tipo, String salario) throws NaoExisteException {
+    public Empregado(String nome, String endereco, String tipo, String salario) throws EmpregadoException {
         this.nome = nome;
         this.endereco = endereco;
         this.tipo = tipo;
         this.salario = salario;
         this.sindicalizado = sindicalizado;
     }
-    public Empregado(String nome, String endereco, String tipo, String salario, String comissao) throws NaoExisteException {
+    public Empregado(String nome, String endereco, String tipo, String salario, String comissao) throws EmpregadoException {
         this.nome = nome;
         this.endereco = endereco;
         this.tipo = tipo;
