@@ -1,6 +1,6 @@
 package br.ufal.ic.p2.wepayu.controllers;
 
-import br.ufal.ic.p2.wepayu.Exception.EmpregadoNaoExisteException;
+import br.ufal.ic.p2.wepayu.Exception.*;
 import br.ufal.ic.p2.wepayu.models.Empregado;
 
 import java.util.HashMap;
@@ -13,7 +13,7 @@ public class EmpregadoService {
         return id;
     }
 
-    public boolean isNumeric(String str) {
+    public static boolean isNumeric(String str) {
         try {
             Double.parseDouble(str);
             return true;
@@ -22,18 +22,29 @@ public class EmpregadoService {
         }
     }
 
-    public String addEmpregado(String nome, String endereco, String tipo, String salario) throws EmpregadoNaoExisteException {
+    public String addEmpregado(String nome, String endereco, String tipo, String salario) throws EmpregadoException {
+        if (tipo.equalsIgnoreCase("comissionado"))
+            throw new TipoNaoAplicavel();
+
+        EmpregadoValidations.validarEmpregado(nome,endereco, tipo,salario);
         String id = GerarId();
         Empregado Empregado = new Empregado(nome,endereco,tipo,salario);
         listaEmpregados.put(id,Empregado);
         return id;
     }
-    public String getAtributoEmpregado(String id, String atributo) throws EmpregadoNaoExisteException {
+    public String addEmpregado(String nome, String endereco, String tipo, String salario, String ValorComissao) throws EmpregadoException {
+        EmpregadoValidations.validarEmpregado(nome,endereco, tipo,salario);
+        String id = GerarId();
+        Empregado Empregado = new Empregado(nome,endereco,tipo,salario, ValorComissao);
+        listaEmpregados.put(id,Empregado);
+        return id;
+    }
+    public String getAtributoEmpregado(String id, String atributo) throws NaoExisteException {
 
         Empregado empregado = listaEmpregados.get(id);
 
         if (empregado == null)
-            throw new EmpregadoNaoExisteException();
+            throw new NaoExisteException();
 
         switch (atributo) {
             case "nome":
@@ -42,7 +53,6 @@ public class EmpregadoService {
                 return empregado.getEndereco();
             case "tipo":
                 return empregado.getTipo();
-
             case "salario":
                 String salarioStr = empregado.getSalario();
                 if (isNumeric(salarioStr)) {
@@ -55,15 +65,15 @@ public class EmpregadoService {
                 } else {
                     return salarioStr; // Retornar a string original se não for um número
                 }
-
             case "sindicalizado":
                 if (empregado.isSindicalizado()){
                     return String.valueOf(empregado.isSindicalizado());
                 }else
                     return "false";
-
+            case "comissao":
+                return empregado.getComissao();
             default:
-                throw new EmpregadoNaoExisteException();
+                throw new NaoExisteException();
         }
     }
 
