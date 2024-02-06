@@ -9,9 +9,6 @@ public class Empregado {
     private String salario;
     private boolean sindicalizado;
     private String comissao;
-    private int horasNormaisTrabalhadas;
-
-
 
     public Empregado(String nome, String endereco, String tipo, String salario) throws EmpregadoException {
         this.nome = nome;

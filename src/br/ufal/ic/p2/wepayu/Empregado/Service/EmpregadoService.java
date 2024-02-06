@@ -1,11 +1,15 @@
 package br.ufal.ic.p2.wepayu.Empregado.Service;
+import br.ufal.ic.p2.wepayu.CartaoDePonto.Exceptions.ExceptionHoras;
 import br.ufal.ic.p2.wepayu.Empregado.Exception.EmpregadoException;
 import br.ufal.ic.p2.wepayu.Empregado.model.Empregado;
-import java.util.HashMap;
+
 import java.util.Map;
 import java.util.UUID;
 
+import static br.ufal.ic.p2.wepayu.CartaoDePonto.ServiceCartaoDePonto.CriaCartao;
+import static br.ufal.ic.p2.wepayu.CartaoDePonto.ValidationsCartaoDePonto.validaTipoHorista;
 import static br.ufal.ic.p2.wepayu.Empregado.Service.EmpregadoValidations.validaRemocao;
+import static br.ufal.ic.p2.wepayu.Empregado.Service.EmpregadoValidations.validaTipo;
 import static br.ufal.ic.p2.wepayu.Sistema.listaEmpregados;
 
 public class EmpregadoService {
@@ -23,24 +27,20 @@ public class EmpregadoService {
             return false;
         }
     }
-    public void imprimirHashMap() {
-        System.out.println("Conteúdo do HashMap:");
-        for (Map.Entry<String, Empregado> entry : listaEmpregados.entrySet()) {
-            String key = entry.getKey();
-            Empregado value = entry.getValue();
-            System.out.println("Key: " + key + ", Value: " + value);
-        }
-    }
-    public String addEmpregado(String nome, String endereco, String tipo, String salario) throws EmpregadoException {
+    //adiciona empregados nao comissionados
+    public String addEmpregado(String nome, String endereco, String tipo, String salario) throws EmpregadoException, ExceptionHoras {
         if (tipo.equalsIgnoreCase("comissionado"))
             throw new EmpregadoException("Tipo nao aplicavel.");
         EmpregadoValidations.validarEmpregado(nome,endereco, tipo,salario);
-
         String id = GerarId();
+
+        if (tipo.equalsIgnoreCase("horista"))
+            CriaCartao(id);
         Empregado Empregado = new Empregado(nome,endereco,tipo,salario);
         listaEmpregados.put(id,Empregado);
         return id;
     }
+    //adiciona somente empregados comissionados
     public String addEmpregado(String nome, String endereco, String tipo, String salario, String ValorComissao) throws EmpregadoException {
         if (!tipo.equalsIgnoreCase("comissionado"))
             throw new EmpregadoException("Tipo nao aplicavel.");
