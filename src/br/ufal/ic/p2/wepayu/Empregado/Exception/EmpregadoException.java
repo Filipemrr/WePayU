@@ -1,4 +1,4 @@
-package br.ufal.ic.p2.wepayu.Exception;
+package br.ufal.ic.p2.wepayu.Empregado.Exception;
 
 public class EmpregadoException extends Exception{
     public EmpregadoException(String message) {

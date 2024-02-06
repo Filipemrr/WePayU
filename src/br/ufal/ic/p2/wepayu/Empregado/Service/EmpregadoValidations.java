@@ -1,11 +1,11 @@
-package br.ufal.ic.p2.wepayu.controllers;
+package br.ufal.ic.p2.wepayu.Empregado.Service;
 
-import br.ufal.ic.p2.wepayu.Exception.*;
+import br.ufal.ic.p2.wepayu.Empregado.Exception.EmpregadoException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static br.ufal.ic.p2.wepayu.controllers.EmpregadoService.isNumeric;
+import static br.ufal.ic.p2.wepayu.Sistema.listaEmpregados;
 
 public class EmpregadoValidations {
     public static boolean isNumericString(String string){
@@ -25,6 +25,9 @@ public class EmpregadoValidations {
         validaTipo(tipo);
         validaSalario(salario);
         validaComissao(comissao);
+    }
+    public static void validaRemocao(String id) throws EmpregadoException {
+        validaId(id);
     }
     public static void validaNome(String nome) throws EmpregadoException {
         if (nome == null || nome.isEmpty()) {
@@ -64,4 +67,11 @@ public class EmpregadoValidations {
             throw new EmpregadoException("Comissao deve ser numerica.");
     }
 
+    public static void validaId(String id) throws EmpregadoException {
+        if (id.isEmpty())
+            throw new EmpregadoException("Identificacao do empregado nao pode ser nula.");
+
+        if (listaEmpregados.get(id) == null)
+            throw new EmpregadoException("Empregado nao existe.");
+    }
 }

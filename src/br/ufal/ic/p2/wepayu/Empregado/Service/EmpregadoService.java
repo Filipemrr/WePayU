@@ -1,11 +1,15 @@
-package br.ufal.ic.p2.wepayu.controllers;
-import br.ufal.ic.p2.wepayu.Exception.*;
-import br.ufal.ic.p2.wepayu.models.Empregado;
+package br.ufal.ic.p2.wepayu.Empregado.Service;
+import br.ufal.ic.p2.wepayu.Empregado.Exception.EmpregadoException;
+import br.ufal.ic.p2.wepayu.Empregado.model.Empregado;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
+import static br.ufal.ic.p2.wepayu.Empregado.Service.EmpregadoValidations.validaRemocao;
+import static br.ufal.ic.p2.wepayu.Sistema.listaEmpregados;
+
 public class EmpregadoService {
-    private HashMap<String, Empregado> listaEmpregados = new HashMap<>();
+
     public String GerarId(){
         String id = UUID.randomUUID().toString();
         return id;
@@ -19,7 +23,14 @@ public class EmpregadoService {
             return false;
         }
     }
-
+    public void imprimirHashMap() {
+        System.out.println("Conteúdo do HashMap:");
+        for (Map.Entry<String, Empregado> entry : listaEmpregados.entrySet()) {
+            String key = entry.getKey();
+            Empregado value = entry.getValue();
+            System.out.println("Key: " + key + ", Value: " + value);
+        }
+    }
     public String addEmpregado(String nome, String endereco, String tipo, String salario) throws EmpregadoException {
         if (tipo.equalsIgnoreCase("comissionado"))
             throw new EmpregadoException("Tipo nao aplicavel.");
@@ -40,6 +51,7 @@ public class EmpregadoService {
         listaEmpregados.put(id,Empregado);
         return id;
     }
+
     public String getAtributoEmpregado(String id, String atributo) throws EmpregadoException {
 
         Empregado empregado = listaEmpregados.get(id);
@@ -80,6 +92,15 @@ public class EmpregadoService {
             default:
                 throw new EmpregadoException("Atributo nao existe.");
         }
+    }
+
+    public void getEmpregadoPorNome(String nome){
+
+    }
+
+    public void removerEmpregado(String id) throws EmpregadoException {
+        validaRemocao(id);
+        listaEmpregados.remove(id);
     }
 
 }
