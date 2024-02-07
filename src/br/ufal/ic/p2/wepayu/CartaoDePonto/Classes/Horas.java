@@ -1,20 +1,6 @@
-package br.ufal.ic.p2.wepayu.CartaoDePonto;
+package br.ufal.ic.p2.wepayu.CartaoDePonto.Classes;
 
-import java.util.HashMap;
-
-
-public class CartaoDePonto {
-    private String id;
-    HashMap<String, Horas> DataeHoras = new HashMap<>();
-
-    public CartaoDePonto(String id) {
-        this.id = id;
-    }
-
-}
-
-
-class Horas {
+public class Horas {
     private double horasNormais;
     private double horasExcedentes;
 
@@ -29,5 +15,3 @@ class Horas {
 
     public double getHorasExcedentes() {return horasExcedentes;}
 }
-
-//lancaCartao emp=${id1} data=1/1/2005 horas=8

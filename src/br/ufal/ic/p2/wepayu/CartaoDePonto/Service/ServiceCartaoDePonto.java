@@ -1,13 +1,15 @@
-package br.ufal.ic.p2.wepayu.CartaoDePonto;
+package br.ufal.ic.p2.wepayu.CartaoDePonto.Service;
 
-import br.ufal.ic.p2.wepayu.CartaoDePonto.Exceptions.ExceptionHoras;
+import br.ufal.ic.p2.wepayu.CartaoDePonto.Classes.CartaoDePonto;
+import br.ufal.ic.p2.wepayu.CartaoDePonto.Classes.Horas;
+import br.ufal.ic.p2.wepayu.CartaoDePonto.Model.ExceptionHoras;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import static br.ufal.ic.p2.wepayu.CartaoDePonto.ValidationsCartaoDePonto.*;
+import static br.ufal.ic.p2.wepayu.CartaoDePonto.Service.ValidationsCartaoDePonto.*;
 import static br.ufal.ic.p2.wepayu.Sistema.listaDeCartoes;
 
 public class ServiceCartaoDePonto {

@@ -1,10 +1,10 @@
 package br.ufal.ic.p2.wepayu;
 
-import br.ufal.ic.p2.wepayu.CartaoDePonto.Exceptions.ExceptionHoras;
+import br.ufal.ic.p2.wepayu.CartaoDePonto.Model.ExceptionHoras;
 import br.ufal.ic.p2.wepayu.Empregado.Exception.EmpregadoException;
 import br.ufal.ic.p2.wepayu.Empregado.Service.EmpregadoService;
 
-import static br.ufal.ic.p2.wepayu.CartaoDePonto.ServiceCartaoDePonto.*;
+import static br.ufal.ic.p2.wepayu.CartaoDePonto.Service.ServiceCartaoDePonto.*;
 
 public class Facade {
     Sistema sistema = new Sistema();

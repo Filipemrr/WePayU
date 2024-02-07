@@ -1,15 +1,12 @@
 package br.ufal.ic.p2.wepayu.Empregado.Service;
-import br.ufal.ic.p2.wepayu.CartaoDePonto.Exceptions.ExceptionHoras;
+import br.ufal.ic.p2.wepayu.CartaoDePonto.Model.ExceptionHoras;
 import br.ufal.ic.p2.wepayu.Empregado.Exception.EmpregadoException;
 import br.ufal.ic.p2.wepayu.Empregado.model.Empregado;
 
-import java.util.Map;
 import java.util.UUID;
 
-import static br.ufal.ic.p2.wepayu.CartaoDePonto.ServiceCartaoDePonto.CriaCartao;
-import static br.ufal.ic.p2.wepayu.CartaoDePonto.ValidationsCartaoDePonto.validaTipoHorista;
+import static br.ufal.ic.p2.wepayu.CartaoDePonto.Service.ServiceCartaoDePonto.CriaCartao;
 import static br.ufal.ic.p2.wepayu.Empregado.Service.EmpregadoValidations.validaRemocao;
-import static br.ufal.ic.p2.wepayu.Empregado.Service.EmpregadoValidations.validaTipo;
 import static br.ufal.ic.p2.wepayu.Sistema.listaEmpregados;
 
 public class EmpregadoService {

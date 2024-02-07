@@ -1,9 +1,8 @@
 package br.ufal.ic.p2.wepayu;
 
 import br.ufal.ic.p2.wepayu.Empregado.model.Empregado;
-import br.ufal.ic.p2.wepayu.CartaoDePonto.CartaoDePonto;
+import br.ufal.ic.p2.wepayu.CartaoDePonto.Classes.CartaoDePonto;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Sistema {
