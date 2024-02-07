@@ -1,19 +1,11 @@
 package br.ufal.ic.p2.wepayu.Vendas.Service;
 
-import br.ufal.ic.p2.wepayu.CartaoDePonto.Classes.Horas;
-import br.ufal.ic.p2.wepayu.CartaoDePonto.Model.ExceptionHoras;
-import br.ufal.ic.p2.wepayu.Empregado.model.Empregado;
+
 import br.ufal.ic.p2.wepayu.Vendas.Exception.ExceptionVendas;
 import br.ufal.ic.p2.wepayu.Vendas.Model.Vendas;
-
-import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-
-
 import static br.ufal.ic.p2.wepayu.Sistema.listaDeVendedores;
-import static br.ufal.ic.p2.wepayu.Sistema.listaEmpregados;
 import static br.ufal.ic.p2.wepayu.Vendas.Service.VendasValidations.*;
 
 public class VendasService {
@@ -36,22 +28,16 @@ public class VendasService {
         LocalDate inicio = LocalDate.parse(DataInicial, DateTimeFormatter.ofPattern("d/M/yyyy"));
         LocalDate fim = LocalDate.parse(DataFinal, DateTimeFormatter.ofPattern("d/M/yyyy"));
 
-        //System.out.println(id);
-        //for (String data : EmpregadoVendendor.VendaDoEmpregado.keySet()) {
-            //System.out.println( "data:"+ data +  " = " + EmpregadoVendendor.obterValorVenda(data));
-        //}
-
         for (String data : EmpregadoVendendor.VendaDoEmpregado.keySet()) {
             LocalDate dataFormatted = LocalDate.parse(data, DateTimeFormatter.ofPattern("d/M/yyyy"));
-            if ((dataFormatted.isAfter(inicio) && dataFormatted.isBefore(fim)) || dataFormatted.isEqual(inicio)) {
+            if ((dataFormatted.isAfter(inicio) && dataFormatted.isBefore(fim)) || dataFormatted.isEqual(inicio) && !dataFormatted.isEqual(fim)) {
                 double ValorDaVenda = EmpregadoVendendor.obterValorVenda(data);
                 validaValor(ValorDaVenda);
                 montanteDeVendas += ValorDaVenda;
             }
         }
-        //System.out.println("-------------------------");
-        String montanteFormatado = String.format("%.2f", montanteDeVendas).replace('.', ',');
-        return montanteFormatado;
+
+        return String.format("%.2f", montanteDeVendas).replace('.', ',');
     }
 
     }
