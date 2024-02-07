@@ -3,6 +3,7 @@ package br.ufal.ic.p2.wepayu.Empregado.model;
 import br.ufal.ic.p2.wepayu.Empregado.Exception.EmpregadoException;
 
 public class Empregado {
+    private String id;
     private String nome;
     private String endereco;
     private String tipo;
@@ -10,14 +11,16 @@ public class Empregado {
     private boolean sindicalizado;
     private String comissao;
 
-    public Empregado(String nome, String endereco, String tipo, String salario) throws EmpregadoException {
+    public Empregado(String id, String nome, String endereco, String tipo, String salario) throws EmpregadoException {
+        this.id = id;
         this.nome = nome;
         this.endereco = endereco;
         this.tipo = tipo;
         this.salario = salario;
         this.sindicalizado = sindicalizado;
     }
-    public Empregado(String nome, String endereco, String tipo, String salario, String comissao) throws EmpregadoException {
+    public Empregado(String id, String nome, String endereco, String tipo, String salario, String comissao) throws EmpregadoException {
+        this.id = id;
         this.nome = nome;
         this.endereco = endereco;
         this.tipo = tipo;
@@ -38,6 +41,7 @@ public class Empregado {
     public String getTipo() {
         return tipo;
     }
+    public String getId(){return id;}
 
     public String getSalario() {
         return salario;

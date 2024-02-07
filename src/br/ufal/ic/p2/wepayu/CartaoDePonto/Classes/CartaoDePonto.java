@@ -14,4 +14,5 @@ public class CartaoDePonto {
 }
 
 
-//lancaCartao emp=${id1} data=1/1/2005 horas=8
+// <5, horas>
+//horas horas normais e horas excentes

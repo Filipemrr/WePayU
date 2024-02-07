@@ -8,6 +8,7 @@ import java.util.UUID;
 import static br.ufal.ic.p2.wepayu.CartaoDePonto.Service.ServiceCartaoDePonto.CriaCartao;
 import static br.ufal.ic.p2.wepayu.Empregado.Service.EmpregadoValidations.validaRemocao;
 import static br.ufal.ic.p2.wepayu.Sistema.listaEmpregados;
+import static br.ufal.ic.p2.wepayu.Vendas.Service.VendasService.criaCartaoDeVendas;
 
 public class EmpregadoService {
 
@@ -30,10 +31,9 @@ public class EmpregadoService {
             throw new EmpregadoException("Tipo nao aplicavel.");
         EmpregadoValidations.validarEmpregado(nome,endereco, tipo,salario);
         String id = GerarId();
-
         if (tipo.equalsIgnoreCase("horista"))
             CriaCartao(id);
-        Empregado Empregado = new Empregado(nome,endereco,tipo,salario);
+        Empregado Empregado = new Empregado(id,nome,endereco,tipo,salario);
         listaEmpregados.put(id,Empregado);
         return id;
     }
@@ -41,10 +41,11 @@ public class EmpregadoService {
     public String addEmpregado(String nome, String endereco, String tipo, String salario, String ValorComissao) throws EmpregadoException {
         if (!tipo.equalsIgnoreCase("comissionado"))
             throw new EmpregadoException("Tipo nao aplicavel.");
-        EmpregadoValidations.validarEmpregado(nome,endereco, tipo,salario,ValorComissao);
 
+        EmpregadoValidations.validarEmpregado(nome,endereco, tipo,salario,ValorComissao);
         String id = GerarId();
-        Empregado Empregado = new Empregado(nome,endereco,tipo,salario, ValorComissao);
+        criaCartaoDeVendas(id);
+        Empregado Empregado = new Empregado(id,nome,endereco,tipo,salario, ValorComissao);
         listaEmpregados.put(id,Empregado);
         return id;
     }
@@ -91,7 +92,7 @@ public class EmpregadoService {
         }
     }
 
-    public void getEmpregadoPorNome(String nome){
+    public void getEmpregadoPorNome(String nome, int indice) throws EmpregadoException {
 
     }
 
