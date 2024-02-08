@@ -12,7 +12,3 @@ public class CartaoDePonto {
     }
 
 }
-
-
-// <5, horas>
-//horas horas normais e horas excentes

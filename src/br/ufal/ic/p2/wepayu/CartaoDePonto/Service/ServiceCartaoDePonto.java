@@ -14,7 +14,6 @@ import static br.ufal.ic.p2.wepayu.Sistema.listaDeCartoes;
 
 public class ServiceCartaoDePonto {
 
-    //public static HashMap<String, CartaoDePonto> listaDeCartoes = new HashMap<>();
     public static void CriaCartao(String id){
         CartaoDePonto NovoCartao = new CartaoDePonto(id);
         listaDeCartoes.put(id,NovoCartao);

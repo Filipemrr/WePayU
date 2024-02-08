@@ -83,8 +83,8 @@ public class EmpregadoService {
                     return salarioStr; // Retornar a string original se não for um número
                 }
             case "sindicalizado":
-                if (empregado.isSindicalizado()){
-                    return String.valueOf(empregado.isSindicalizado());
+                if (empregado.getIsSindicalizado()){
+                    return String.valueOf(empregado.getIsSindicalizado());
                 }else
                     return "false";
             case "comissao":
@@ -93,7 +93,6 @@ public class EmpregadoService {
                 throw new EmpregadoException("Atributo nao existe.");
         }
     }
-
     public String getEmpregadoPorNome(String nome, int indice) throws EmpregadoException {
         int i = 0;
         for (Empregado empregado : listaEmpregados.values()) {

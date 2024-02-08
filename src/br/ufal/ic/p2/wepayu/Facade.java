@@ -3,9 +3,11 @@ package br.ufal.ic.p2.wepayu;
 import br.ufal.ic.p2.wepayu.CartaoDePonto.Model.ExceptionHoras;
 import br.ufal.ic.p2.wepayu.Empregado.Exception.EmpregadoException;
 import br.ufal.ic.p2.wepayu.Empregado.Service.EmpregadoService;
+import br.ufal.ic.p2.wepayu.Sindicato.Exception.SindicatoExceptions;
 import br.ufal.ic.p2.wepayu.Vendas.Exception.ExceptionVendas;
 
 import static br.ufal.ic.p2.wepayu.CartaoDePonto.Service.ServiceCartaoDePonto.*;
+import static br.ufal.ic.p2.wepayu.Sindicato.Service.SindicatoService.*;
 import static br.ufal.ic.p2.wepayu.Vendas.Service.VendasService.GetVendasRealizadas;
 import static br.ufal.ic.p2.wepayu.Vendas.Service.VendasService.LancaVenda;
 
@@ -46,5 +48,17 @@ public class Facade {
     }
     public String getHorasExtrasTrabalhadas(String emp, String dataInicial, String dataFinal){
         return GetHorasExtrasTrabalhadas(emp,dataInicial,dataFinal);
+    }
+    public void alteraEmpregado(String id, String atributo, Boolean valor, String idSindical, String taxaSindical) throws SindicatoExceptions {
+        AlteraEmpregado(id, atributo, valor, idSindical, taxaSindical);
+    }
+    public void alteraEmpregado(String id, String atributo, Boolean valor) throws SindicatoExceptions {
+        AlteraEmpregado(id, atributo, valor);
+    }
+    public void lancaTaxaServico(String idSindical, String data, String valor) throws SindicatoExceptions {
+        LancaTaxaServico(idSindical,data,valor);
+    }
+    public String getTaxasServico(String id, String dataInicial, String dataFinal) throws SindicatoExceptions {
+        return GetTaxasServico(id,dataInicial,dataFinal);
     }
 }

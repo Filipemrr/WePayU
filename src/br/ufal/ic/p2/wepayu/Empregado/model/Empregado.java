@@ -8,7 +8,7 @@ public class Empregado {
     private String endereco;
     private String tipo;
     private String salario;
-    private boolean sindicalizado;
+    private boolean isSindicalizado;
     private String comissao;
 
     public Empregado(String id, String nome, String endereco, String tipo, String salario) throws EmpregadoException {
@@ -17,7 +17,7 @@ public class Empregado {
         this.endereco = endereco;
         this.tipo = tipo;
         this.salario = salario;
-        this.sindicalizado = sindicalizado;
+        this.isSindicalizado = isSindicalizado;
     }
     public Empregado(String id, String nome, String endereco, String tipo, String salario, String comissao) throws EmpregadoException {
         this.id = id;
@@ -25,7 +25,6 @@ public class Empregado {
         this.endereco = endereco;
         this.tipo = tipo;
         this.salario = salario;
-        this.sindicalizado = sindicalizado;
         this.comissao = comissao;
     }
 
@@ -49,7 +48,10 @@ public class Empregado {
     public String getComissao() {
         return comissao;
     }
-    public boolean isSindicalizado() {return sindicalizado;}
+
+    public Boolean getIsSindicalizado() { return isSindicalizado;}
+    public void SetisSindicalizado(boolean valor) {isSindicalizado = valor;}
+    public void SetTipo(String atributo) {this.tipo =atributo;}
 }
 
 //SubClasses
