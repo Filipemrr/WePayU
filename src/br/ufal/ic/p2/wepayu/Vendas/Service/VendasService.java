@@ -36,7 +36,6 @@ public class VendasService {
                 montanteDeVendas += ValorDaVenda;
             }
         }
-
         return String.format("%.2f", montanteDeVendas).replace('.', ',');
     }
 

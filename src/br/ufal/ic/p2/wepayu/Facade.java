@@ -26,8 +26,8 @@ public class Facade {
          return Sistema.Empregados.getAtributoEmpregado(emp, atributo);
     }
 
-    public void getEmpregadoPorNome(String nome, int indice) throws EmpregadoException {
-        Sistema.Empregados.getEmpregadoPorNome(nome, indice);
+    public String getEmpregadoPorNome(String nome, int indice) throws EmpregadoException {
+        return Sistema.Empregados.getEmpregadoPorNome(nome, indice);
     }
     public void removerEmpregado(String emp) throws EmpregadoException {
         Sistema.Empregados.removerEmpregado(emp);

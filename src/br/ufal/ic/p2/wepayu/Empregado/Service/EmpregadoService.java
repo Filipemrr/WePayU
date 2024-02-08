@@ -2,11 +2,13 @@ package br.ufal.ic.p2.wepayu.Empregado.Service;
 import br.ufal.ic.p2.wepayu.CartaoDePonto.Model.ExceptionHoras;
 import br.ufal.ic.p2.wepayu.Empregado.Exception.EmpregadoException;
 import br.ufal.ic.p2.wepayu.Empregado.model.Empregado;
+import br.ufal.ic.p2.wepayu.Sistema;
 
 import java.util.UUID;
 
 import static br.ufal.ic.p2.wepayu.CartaoDePonto.Service.ServiceCartaoDePonto.CriaCartao;
 import static br.ufal.ic.p2.wepayu.Empregado.Service.EmpregadoValidations.validaRemocao;
+import static br.ufal.ic.p2.wepayu.Sistema.id1;
 import static br.ufal.ic.p2.wepayu.Sistema.listaEmpregados;
 import static br.ufal.ic.p2.wepayu.Vendas.Service.VendasService.criaCartaoDeVendas;
 
@@ -92,9 +94,19 @@ public class EmpregadoService {
         }
     }
 
-    public void getEmpregadoPorNome(String nome, int indice) throws EmpregadoException {
+    public String getEmpregadoPorNome(String nome, int indice) throws EmpregadoException {
+        int i = 0;
+        for (Empregado empregado : listaEmpregados.values()) {
+            if (empregado.getNome().equals(nome))
+                i++;
 
+            if (indice == i) {
+                return empregado.getId();
+            }
     }
+        throw new EmpregadoException("Nao ha empregado com esse nome.");
+    }
+
 
     public void removerEmpregado(String id) throws EmpregadoException {
         validaRemocao(id);

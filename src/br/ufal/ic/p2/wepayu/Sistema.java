@@ -8,10 +8,11 @@ import br.ufal.ic.p2.wepayu.Vendas.Model.Vendas;
 import java.util.HashMap;
 
 public class Sistema {
-
+    public static String id1;
     public static HashMap<String, Empregado> listaEmpregados = new HashMap<>();
     static EmpregadoService Empregados = new EmpregadoService();
     public static HashMap<String, CartaoDePonto> listaDeCartoes = new HashMap<>();
+
     public static HashMap<String, Vendas> listaDeVendedores = new HashMap<>();
 
     public void zerarSistema(){
