@@ -2,12 +2,16 @@ package br.ufal.ic.p2.wepayu.Empregado.Service;
 import br.ufal.ic.p2.wepayu.CartaoDePonto.Model.ExceptionHoras;
 import br.ufal.ic.p2.wepayu.Empregado.Exception.EmpregadoException;
 import br.ufal.ic.p2.wepayu.Empregado.model.Empregado;
+import br.ufal.ic.p2.wepayu.Sindicato.Exception.SindicatoExceptions;
 import br.ufal.ic.p2.wepayu.Sistema;
 
 import java.util.UUID;
 
 import static br.ufal.ic.p2.wepayu.CartaoDePonto.Service.ServiceCartaoDePonto.CriaCartao;
+import static br.ufal.ic.p2.wepayu.Empregado.Service.EmpregadoValidations.validaGetAtributoEmpregado;
 import static br.ufal.ic.p2.wepayu.Empregado.Service.EmpregadoValidations.validaRemocao;
+import static br.ufal.ic.p2.wepayu.Sindicato.Service.SindicatoService.criaVinculoSindical;
+import static br.ufal.ic.p2.wepayu.Sindicato.Service.SindicatoValidations.alteraEmpregadoValidation;
 import static br.ufal.ic.p2.wepayu.Sistema.id1;
 import static br.ufal.ic.p2.wepayu.Sistema.listaEmpregados;
 import static br.ufal.ic.p2.wepayu.Vendas.Service.VendasService.criaCartaoDeVendas;
@@ -53,7 +57,7 @@ public class EmpregadoService {
     }
 
     public String getAtributoEmpregado(String id, String atributo) throws EmpregadoException {
-
+        validaGetAtributoEmpregado(id,atributo);
         Empregado empregado = listaEmpregados.get(id);
 
         if (id.isEmpty())
@@ -106,7 +110,17 @@ public class EmpregadoService {
         throw new EmpregadoException("Nao ha empregado com esse nome.");
     }
 
-
+    public static void AlteraEmpregado(String id, String atributo, Boolean valor, String idSindical, String taxaSindical) throws SindicatoExceptions {
+        alteraEmpregadoValidation(idSindical);
+        Empregado empregado = listaEmpregados.get(id);
+        empregado.SetisSindicalizado(valor);
+        empregado.SetTipo(atributo);
+        criaVinculoSindical(id,idSindical,taxaSindical);
+    }
+    public static void AlteraEmpregado(String id, String atributo, Boolean valor){
+        Empregado empregado = listaEmpregados.get(id);
+        empregado.SetisSindicalizado(valor);
+    }
     public void removerEmpregado(String id) throws EmpregadoException {
         validaRemocao(id);
         listaEmpregados.remove(id);

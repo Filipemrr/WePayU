@@ -7,6 +7,7 @@ import br.ufal.ic.p2.wepayu.Sindicato.Exception.SindicatoExceptions;
 import br.ufal.ic.p2.wepayu.Vendas.Exception.ExceptionVendas;
 
 import static br.ufal.ic.p2.wepayu.CartaoDePonto.Service.ServiceCartaoDePonto.*;
+import static br.ufal.ic.p2.wepayu.Empregado.Service.EmpregadoService.AlteraEmpregado;
 import static br.ufal.ic.p2.wepayu.Sindicato.Service.SindicatoService.*;
 import static br.ufal.ic.p2.wepayu.Vendas.Service.VendasService.GetVendasRealizadas;
 import static br.ufal.ic.p2.wepayu.Vendas.Service.VendasService.LancaVenda;

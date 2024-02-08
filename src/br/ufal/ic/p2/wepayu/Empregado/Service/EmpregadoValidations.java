@@ -26,6 +26,18 @@ public class EmpregadoValidations {
         validaSalario(salario);
         validaComissao(comissao);
     }
+    public static void validaGetAtributoEmpregado(String id, String atributoRequerido) throws EmpregadoException {
+        validaAtributo(id,atributoRequerido);
+    }
+
+    private static void validaAtributo(String id, String atributoRequerido) throws EmpregadoException {
+        if (atributoRequerido.equals("comissao")){
+            if (!listaEmpregados.get(id).getTipo().equals("comissionado"))
+                throw new EmpregadoException("Empregado nao eh comissionado.");
+        }
+
+    }
+
     public static void validaRemocao(String id) throws EmpregadoException {
         validaId(id);
     }

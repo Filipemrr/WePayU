@@ -1,8 +1,4 @@
 package br.ufal.ic.p2.wepayu.Sindicato.Service;
-
-import br.ufal.ic.p2.wepayu.CartaoDePonto.Classes.CartaoDePonto;
-import br.ufal.ic.p2.wepayu.CartaoDePonto.Classes.Horas;
-import br.ufal.ic.p2.wepayu.Empregado.Exception.EmpregadoException;
 import br.ufal.ic.p2.wepayu.Empregado.model.Empregado;
 import br.ufal.ic.p2.wepayu.Sindicato.Classes.MembroSindicato;
 import br.ufal.ic.p2.wepayu.Sindicato.Exception.SindicatoExceptions;
@@ -10,7 +6,7 @@ import br.ufal.ic.p2.wepayu.Sindicato.Exception.SindicatoExceptions;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Objects;
+
 
 import static br.ufal.ic.p2.wepayu.Sindicato.Service.SindicatoValidations.*;
 import static br.ufal.ic.p2.wepayu.Sistema.*;
@@ -25,11 +21,9 @@ public class SindicatoService {
         String ValorDaTaxa = Valor.replace(',', '.');
         double valorDaTaxa = Double.parseDouble(ValorDaTaxa);
         lancamentoDeTaxaValidations(idMembro, data, valorDaTaxa);
-        String idNormal = null;
         for (String id : listaDeSindicalizados.keySet()) {
             MembroSindicato membroSindicato = listaDeSindicalizados.get(id);
             if (membroSindicato.getIdSindical().equals(idMembro)) {
-                idNormal = id;
                 membroSindicato.cadastrarNovaTaxa(data,valorDaTaxa);
             }
         }
@@ -51,16 +45,5 @@ public class SindicatoService {
         DecimalFormat df = new DecimalFormat("#,##0.00");
         return df.format(taxasDeServicoTotais).replace('.', ',');
     }
-    public static void AlteraEmpregado(String id, String atributo, Boolean valor, String idSindical, String taxaSindical) throws SindicatoExceptions {
-        alteraEmpregadoValidation(idSindical);
-        Empregado empregado = listaEmpregados.get(id);
-        empregado.SetisSindicalizado(valor);
-        empregado.SetTipo(atributo);
-        criaVinculoSindical(id,idSindical,taxaSindical);
-    }
-    public static void AlteraEmpregado(String id, String atributo, Boolean valor) throws SindicatoExceptions {
-        Empregado empregado = listaEmpregados.get(id);
-        empregado.SetTipo(atributo);
-        empregado.SetisSindicalizado(valor);
-    }
+
 }
