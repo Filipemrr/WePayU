@@ -20,5 +20,3 @@ public class Sistema {
         listaEmpregados.clear();
     }
 }
-
-// <1, Empregado

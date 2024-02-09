@@ -10,10 +10,10 @@ public class Empregado {
     private String salario;
     private boolean isSindicalizado;
     private String comissao;
-    private String metodoDePagamento;
+    private String metodoDePagamento = "emMaos";
     private Boolean isComissionado = false;
     private InformacoesBancarias informacoesBancarias;
-    private boolean isRecebedorPorBanco;
+    private boolean isRecebedorPorBanco = false;
 
     public Empregado(String id, String nome, String endereco, String tipo, String salario) throws EmpregadoException {
         this.id = id;
@@ -46,7 +46,6 @@ public class Empregado {
         return tipo;
     }
     public void setTipo(String Tipo) {this.tipo = Tipo;}
-
     public String getId(){return id;}
 
     public String getSalario() {
@@ -58,11 +57,12 @@ public class Empregado {
         return comissao;
     }
     public void setComissao(String NovaComissao) {this.comissao = NovaComissao;}
+    public void  setIsComissionado(boolean isComissionado){
+        this.isComissionado = isComissionado;
+    }
 
     public String getMetodoDePagamento() { return metodoDePagamento;}
-    public void setMetodoDePagamento(String MetodoDePagamento) {this.metodoDePagamento = MetodoDePagamento;}
-    public boolean getisComissionado(){return isComissionado;}
-    public void SetisComissionado(Boolean valor){this.isComissionado = valor;}
+    public void setMetodoDePagamento(String pagamento) {this.metodoDePagamento = pagamento;}
 
     public void SetInformacoesBancarias(InformacoesBancarias informacoesBancarias){
         this.informacoesBancarias = informacoesBancarias;
@@ -81,6 +81,7 @@ public class Empregado {
         return "Empregado nao recebe em banco.";
     }
     public boolean isRecebedorPorBanco(){return isRecebedorPorBanco;}
+    public void setisRecebedorPorBanco(boolean valor){this.isRecebedorPorBanco = valor;}
     public Boolean getIsSindicalizado() { return isSindicalizado;}
     public void SetisSindicalizado(boolean valor) {isSindicalizado = valor;}
     public void SetTipo(String atributo) {this.tipo =atributo;}

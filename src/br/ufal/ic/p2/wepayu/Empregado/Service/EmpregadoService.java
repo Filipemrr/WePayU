@@ -107,26 +107,21 @@ public class EmpregadoService {
         }
 
         if (atributo.equals("sindicalizado")) {
-            if (empregado.getIsSindicalizado()){
-                return String.valueOf(empregado.getIsSindicalizado());
-            } else {
+            if (empregado.getIsSindicalizado())
+                return "true";
+            else
                 return "false";
-            }
         }
 
         if (atributo.equals("comissao")) {
-            if (empregado.getisComissionado())
+            if (empregado.getTipo().equalsIgnoreCase("comissionado"))
                 return empregado.getComissao();
 
             throw new EmpregadoException("Empregado nao eh comissionado.");
         }
 
         if (atributo.equals("metodoPagamento")) {
-            if (empregado.isRecebedorPorBanco()) {
-                return "banco";
-            } else {
-                return "emMaos";
-            }
+           return empregado.getMetodoDePagamento();
         }
 
         if (atributo.equalsIgnoreCase("idSindicato") || atributo.equalsIgnoreCase("taxaSindical")) {
@@ -138,7 +133,7 @@ public class EmpregadoService {
             if (atributo.equals("taxaSindical")) return sindicalista.getTaxaSindical();
         }
 
-        if (atributo.equals("banco") || atributo.equalsIgnoreCase("agencia") || atributo.equalsIgnoreCase("contaCorrente") || atributo.equalsIgnoreCase("valor"))
+        if (atributo.equalsIgnoreCase("banco") || atributo.equalsIgnoreCase("agencia") || atributo.equalsIgnoreCase("contaCorrente") || atributo.equalsIgnoreCase("valor"))
             if (!empregado.isRecebedorPorBanco())
                 throw new EmpregadoException("Empregado nao recebe em banco.");
             else
@@ -153,6 +148,7 @@ public class EmpregadoService {
         InformacoesBancarias infosBancariasEmpregado = new InformacoesBancarias(valor1,banco,agencia,contaCorrente);
         empregadoAtualizado.SetInformacoesBancarias(infosBancariasEmpregado);
         empregadoAtualizado.setMetodoDePagamento("banco");
+        empregadoAtualizado.setisRecebedorPorBanco(true);
         listaEmpregados.put(id,empregadoAtualizado);
     }
     public static void AlteraEmpregadoComissionado(String id, String atributo, String valor) throws EmpregadoException {
@@ -172,15 +168,20 @@ public class EmpregadoService {
         if (valor.equalsIgnoreCase("true"))
             empregado.SetisSindicalizado(true);
 
-        if (!empregado.getisComissionado())
+        if (!empregado.getTipo().equalsIgnoreCase("comissionado"))
             throw new EmpregadoException("Empregado nao eh sindicalizado.");
     }
     public static void ComissionaEmpregado(String id, String atributo, String valor,String comissao) throws EmpregadoException {
-            Empregado empregado = listaEmpregados.get(id);
-            empregado.setTipo("comissionado");
-            empregado.setComissao(comissao);
-            empregado.SetisComissionado(true);
-            listaEmpregados.put(id,empregado);
+        Empregado empregado = listaEmpregados.get(id);
+        if (valor.equalsIgnoreCase("comissionado")){
+                empregado.setTipo("comissionado");
+                empregado.setComissao(comissao);
+                listaEmpregados.put(id,empregado);
+        }
+            if (valor.equalsIgnoreCase("horista")){
+                empregado.setTipo("horista");
+                empregado.setSalario(comissao);
+            }
     }
     public static void AlteraDefaultAtributoEmpregado(String id, String atributo, String valor) throws EmpregadoException {
         Empregado empregadoAtualizado = listaEmpregados.get(id);
@@ -196,10 +197,30 @@ public class EmpregadoService {
         } else if (atributo.equalsIgnoreCase("salario")) {
             empregadoAtualizado.setSalario(valor);
         }
-        else if (atributo.equalsIgnoreCase("comissao"))
-            empregadoAtualizado.setComissao(valor);
-        else if (atributo.equalsIgnoreCase("metodoPagamento"))
+        else if (atributo.equalsIgnoreCase("comissao")){
+            if (valor.equalsIgnoreCase("true")) {
+                empregadoAtualizado.setComissao(valor);
+                empregadoAtualizado.setIsComissionado(true);
+            }
+        }
+
+        else if (atributo.equalsIgnoreCase("metodoPagamento")){
+            if (!valor.equalsIgnoreCase("correios") && !valor.equalsIgnoreCase("emMaos") && !valor.equalsIgnoreCase("banco"))
+                throw new EmpregadoException("Metodo de pagamento invalido.");
+            if (!valor.equalsIgnoreCase("banco"))
+                empregadoAtualizado.setisRecebedorPorBanco(false);
             empregadoAtualizado.setMetodoDePagamento(valor);
+
+        }
+        else if (atributo.equalsIgnoreCase("sindicalizado")){
+            if (valor.equalsIgnoreCase("true"))
+                empregadoAtualizado.SetisSindicalizado(true);
+            if (valor.equalsIgnoreCase("false"))
+                empregadoAtualizado.SetisSindicalizado(false);
+            else
+                throw new EmpregadoException("Valor invalido");
+        }
+
 
         listaEmpregados.put(id, empregadoAtualizado);
     }
