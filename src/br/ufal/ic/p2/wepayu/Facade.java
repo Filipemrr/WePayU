@@ -29,11 +29,11 @@ public class Facade {
 
     //READ
     public String getAtributoEmpregado(String emp, String atributo) throws EmpregadoException {
-         return Sistema.Empregados.getAtributoEmpregado(emp, atributo);
+         return Sistema.Empregados.GetAtributoEmpregado(emp, atributo);
     }
 
     public String getEmpregadoPorNome(String nome, int indice) throws EmpregadoException {
-        return Sistema.Empregados.getEmpregadoPorNome(nome, indice);
+        return Sistema.Empregados.GetEmpregadoPorNome(nome, indice);
     }
     public String getTaxasServico(String id, String dataInicial, String dataFinal) throws SindicatoExceptions {
         return GetTaxasServico(id,dataInicial,dataFinal);

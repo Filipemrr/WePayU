@@ -32,6 +32,8 @@ public class EmpregadoService {
             return false;
         }
     }
+
+    //Create
     public String AddEmpregado(String nome, String endereco, String tipo, String salario) throws EmpregadoException, ExceptionHoras {
         if (tipo.equalsIgnoreCase("comissionado"))
             throw new EmpregadoException("Tipo nao aplicavel.");
@@ -55,7 +57,20 @@ public class EmpregadoService {
         return id;
     }
 
-    public String getAtributoEmpregado(String id, String atributo) throws EmpregadoException {
+    //Read
+    public String GetEmpregadoPorNome(String nome, int indice) throws EmpregadoException {
+        int i = 0;
+        for (Empregado empregado : listaEmpregados.values()) {
+            if (empregado.getNome().equals(nome))
+                i++;
+
+            if (indice == i) {
+                return empregado.getId();
+            }
+        }
+        throw new EmpregadoException("Nao ha empregado com esse nome.");
+    }
+    public String GetAtributoEmpregado(String id, String atributo) throws EmpregadoException {
         validaGetAtributoEmpregado(id, atributo);
         Empregado empregado = listaEmpregados.get(id);
 
@@ -132,6 +147,7 @@ public class EmpregadoService {
         throw new EmpregadoException("Atributo nao existe.");
     }
 
+    //UPDATE
     public static void AlteraMetodoPagamentoEmpregado(String id, String atributo, String valor1, String banco, String agencia, String contaCorrente){
         Empregado empregadoAtualizado = listaEmpregados.get(id);
         InformacoesBancarias infosBancariasEmpregado = new InformacoesBancarias(valor1,banco,agencia,contaCorrente);
@@ -187,19 +203,6 @@ public class EmpregadoService {
 
         listaEmpregados.put(id, empregadoAtualizado);
     }
-
-    public String getEmpregadoPorNome(String nome, int indice) throws EmpregadoException {
-        int i = 0;
-        for (Empregado empregado : listaEmpregados.values()) {
-            if (empregado.getNome().equals(nome))
-                i++;
-
-            if (indice == i) {
-                return empregado.getId();
-            }
-    }
-        throw new EmpregadoException("Nao ha empregado com esse nome.");
-    }
     public static void SindicalizaEmpregado(String id, String atributo, Boolean valor, String idSindical, String taxaSindical) throws SindicatoExceptions {
         alteraEmpregadoValidation(idSindical);
         Empregado empregado = listaEmpregados.get(id);
@@ -208,6 +211,8 @@ public class EmpregadoService {
         listaEmpregados.put(id,empregado);
     }
 
+
+    //DELETE
     public void removerEmpregado(String id) throws EmpregadoException {
         validaRemocao(id);
         listaEmpregados.remove(id);
