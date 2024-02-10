@@ -29,13 +29,57 @@ public class EmpregadoValidations {
     public static void validaGetAtributoEmpregado(String id, String atributoRequerido) throws EmpregadoException {
         validaAtributo(id,atributoRequerido);
     }
+    public static void validaAtributosDefaultUpdate(String id, String atributo, String valor) throws EmpregadoException {
+        validaId(id);
+        validarExistenciaAtributo(atributo);
+        validaValor(atributo,valor);
+        if (atributo.equalsIgnoreCase("comissao"))
+            fodase(valor);
+        if(atributo.equalsIgnoreCase("salario"))
+            validaSalario(valor);
 
+
+    }
+
+
+    public static void fodase(String valor) throws EmpregadoException {
+        if (valor == null || valor.isEmpty()) {
+            throw new EmpregadoException("Comissao nao pode ser nula.");
+        }
+
+        for (char c : valor.toCharArray()) {
+            if (!Character.isDigit(c)) {
+                throw new EmpregadoException("Comissao deve ser nao-negativa.");
+            }
+        }
+    }
+    public static void validarExistenciaAtributo(String atributo) throws EmpregadoException {
+        switch (atributo.toLowerCase()) {
+            case "nome":
+            case "endereco":
+            case "tipo":
+            case "salario":
+            case "sindicalizado":
+            case "comissao":
+            case "metodopagamento":
+            case "banco":
+            case "agencia":
+                break;
+            default:
+                throw new EmpregadoException("Atributo nao existe.");
+        }
+    }
     private static void validaAtributo(String id, String atributoRequerido) throws EmpregadoException {
         if (atributoRequerido.equals("comissao")){
             if (!listaEmpregados.get(id).getTipo().equals("comissionado"))
                 throw new EmpregadoException("Empregado nao eh comissionado.");
         }
-
+    }
+    public static void validaValor(String atributo, String valor) throws EmpregadoException {
+        if (valor == null || valor.isEmpty()) {
+            String atributoCapitalizado = atributo.substring(0, 1).toUpperCase() + atributo.substring(1);
+            throw new EmpregadoException(atributoCapitalizado + " nao pode ser nulo.");
+        }
     }
 
     public static void validaRemocao(String id) throws EmpregadoException {
