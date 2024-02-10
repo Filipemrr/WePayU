@@ -2,7 +2,6 @@ package br.ufal.ic.p2.wepayu;
 
 import br.ufal.ic.p2.wepayu.CartaoDePonto.Model.ExceptionHoras;
 import br.ufal.ic.p2.wepayu.Empregado.Exception.EmpregadoException;
-import br.ufal.ic.p2.wepayu.Empregado.Service.EmpregadoService;
 import br.ufal.ic.p2.wepayu.Sindicato.Exception.SindicatoExceptions;
 import br.ufal.ic.p2.wepayu.Vendas.Exception.ExceptionVendas;
 
@@ -71,7 +70,7 @@ public class Facade {
         AlteraMetodoPagamentoEmpregado(id, atributo,  valor1,  banco,  agencia,contaCorrente);
     }
     //Torna empregado sindicalizado
-    public void alteraEmpregado(String id, String atributo, Boolean valor, String idSindical, String taxaSindical) throws SindicatoExceptions {
+    public void alteraEmpregado(String id, String atributo, String valor, String idSindical, String taxaSindical) throws SindicatoExceptions, EmpregadoException {
         SindicalizaEmpregado(id, atributo, valor, idSindical, taxaSindical);
     }
     //Torna empregado Comissionado

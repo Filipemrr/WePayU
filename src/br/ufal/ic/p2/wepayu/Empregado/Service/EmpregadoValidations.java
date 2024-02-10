@@ -30,26 +30,72 @@ public class EmpregadoValidations {
         validaAtributo(id,atributoRequerido);
     }
     public static void validaAtributosDefaultUpdate(String id, String atributo, String valor) throws EmpregadoException {
+
+        if (atributo.equalsIgnoreCase("comissao"))
+            validaValorComissao(valor);
+        if(atributo.equalsIgnoreCase("salario"))
+            validaSalario(valor);
+        if (atributo.equalsIgnoreCase("sindicalizado")){
+            if (!valor.equalsIgnoreCase("true") && !valor.equalsIgnoreCase("false"))
+                throw new EmpregadoException("Valor deve ser true ou false.");
+        }
+        if (atributo.equalsIgnoreCase("tipo"))
+            validaTipo(valor);
+
         validaId(id);
         validarExistenciaAtributo(atributo);
         validaValor(atributo,valor);
-        if (atributo.equalsIgnoreCase("comissao"))
-            fodase(valor);
-        if(atributo.equalsIgnoreCase("salario"))
-            validaSalario(valor);
 
 
     }
 
 
-    public static void fodase(String valor) throws EmpregadoException {
+    public static void validaBanco(String id, String atributo, String valor1, String banco, String agencia, String contaCorrente) throws EmpregadoException {
+        validaBancoNome(banco,agencia, contaCorrente);
+    }
+    public static void validaSindicalizacao(String id, String atributo, String valor, String idSindical, String taxaSindical) throws EmpregadoException {
+        qualquerStringNula(idSindical, "Identificacao do sindicato");
+        qualquerStringNula(taxaSindical,"Taxa sindical");
+        qualquerStringNaoNumerica(taxaSindical,"Taxa sindical");
+    }
+
+    public static void qualquerStringNaoNumerica(String taxaSindical, String message) throws EmpregadoException {
+        for (char c : taxaSindical.toCharArray()) {
+            if (Character.isLetter(c)) {
+                throw new EmpregadoException(message + " deve ser numerica.");
+            }
+        }
+        if (taxaSindical.charAt(0) == '-') {
+            throw new EmpregadoException(message+ " deve ser nao-negativa.");
+        }
+    }
+
+    private static void validaBancoNome(String banco, String agencia, String contaCorrente) throws EmpregadoException {
+        if (banco.isEmpty())
+            throw new EmpregadoException("Banco nao pode ser nulo.");
+        if (agencia.isEmpty())
+            throw new EmpregadoException("Agencia nao pode ser nulo.");
+        if (contaCorrente.isEmpty())
+            throw new EmpregadoException("Conta corrente nao pode ser nulo.");
+    }
+
+    public static void qualquerStringNula(String id, String message) throws EmpregadoException {
+        if (id.isEmpty())
+            throw new EmpregadoException(message + " nao pode ser nula.");
+    }
+    public static void validaValorComissao(String valor) throws EmpregadoException {
+
         if (valor == null || valor.isEmpty()) {
             throw new EmpregadoException("Comissao nao pode ser nula.");
         }
+        if (valor.charAt(0) == '-') {
+            throw new EmpregadoException("Comissao deve ser nao-negativa.");
+        }
 
+        // Verifica se a comissão é um número
         for (char c : valor.toCharArray()) {
-            if (!Character.isDigit(c)) {
-                throw new EmpregadoException("Comissao deve ser nao-negativa.");
+            if (!Character.isDigit(c) && c != ',') {
+                throw new EmpregadoException("Comissao deve ser numerica.");
             }
         }
     }

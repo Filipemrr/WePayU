@@ -184,7 +184,8 @@ public class EmpregadoService {
 
         listaEmpregados.put(id, empregadoAtualizado);
     }
-    public static void AlteraMetodoPagamentoEmpregado(String id, String atributo, String valor1, String banco, String agencia, String contaCorrente){
+    public static void AlteraMetodoPagamentoEmpregado(String id, String atributo, String valor1, String banco, String agencia, String contaCorrente) throws EmpregadoException {
+        validaBanco(id,atributo,valor1,banco,agencia,contaCorrente);
         Empregado empregadoAtualizado = listaEmpregados.get(id);
         InformacoesBancarias infosBancariasEmpregado = new InformacoesBancarias(valor1,banco,agencia,contaCorrente);
         empregadoAtualizado.SetInformacoesBancarias(infosBancariasEmpregado);
@@ -225,10 +226,11 @@ public class EmpregadoService {
             }
     }
 
-    public static void SindicalizaEmpregado(String id, String atributo, Boolean valor, String idSindical, String taxaSindical) throws SindicatoExceptions {
+    public static void SindicalizaEmpregado(String id, String atributo, String valor, String idSindical, String taxaSindical) throws SindicatoExceptions, EmpregadoException {
+        validaSindicalizacao(id,atributo,valor,idSindical,taxaSindical);
         alteraEmpregadoValidation(idSindical);
         Empregado empregado = listaEmpregados.get(id);
-        empregado.SetisSindicalizado(valor);
+        empregado.SetisSindicalizado(true);
         criaVinculoSindical(id,idSindical,taxaSindical);
         listaEmpregados.put(id,empregado);
     }
