@@ -18,5 +18,8 @@ public class Sistema {
 
     public void zerarSistema(){
         listaEmpregados.clear();
+        listaDeCartoes.clear();
+        listaDeSindicalizados.clear();
+        listaDeVendedores.clear();
     }
 }
