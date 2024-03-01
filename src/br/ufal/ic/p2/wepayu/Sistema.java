@@ -1,10 +1,10 @@
 package br.ufal.ic.p2.wepayu;
 
-import br.ufal.ic.p2.wepayu.Empregado.Service.EmpregadoService;
-import br.ufal.ic.p2.wepayu.Empregado.model.Empregado;
-import br.ufal.ic.p2.wepayu.CartaoDePonto.Classes.CartaoDePonto;
-import br.ufal.ic.p2.wepayu.Sindicato.Classes.MembroSindicato;
-import br.ufal.ic.p2.wepayu.Vendas.Model.Vendas;
+import br.ufal.ic.p2.wepayu.ModuleEmpregado.Service.EmpregadoService;
+import br.ufal.ic.p2.wepayu.ModuleEmpregado.model.Empregado;
+import br.ufal.ic.p2.wepayu.ModuleCartaoDePonto.Classes.CartaoDePonto;
+import br.ufal.ic.p2.wepayu.ModuleSindicato.Classes.MembroSindicato;
+import br.ufal.ic.p2.wepayu.ModuleVendas.Model.Vendas;
 
 import java.util.HashMap;
 

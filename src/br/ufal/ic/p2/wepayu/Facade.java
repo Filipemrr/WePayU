@@ -1,15 +1,10 @@
 package br.ufal.ic.p2.wepayu;
-
-import br.ufal.ic.p2.wepayu.CartaoDePonto.Model.ExceptionHoras;
-import br.ufal.ic.p2.wepayu.Sindicato.Exception.SindicatoExceptions;
-import br.ufal.ic.p2.wepayu.Vendas.Exception.ExceptionVendas;
-
-import static br.ufal.ic.p2.wepayu.CartaoDePonto.Service.ServiceCartaoDePonto.*;
-import static br.ufal.ic.p2.wepayu.Empregado.Service.EmpregadoService.*;
-import static br.ufal.ic.p2.wepayu.FolhaDePagamento.Service.FolhaService.geraBalancoTotal;
-import static br.ufal.ic.p2.wepayu.Sindicato.Service.SindicatoService.*;
-import static br.ufal.ic.p2.wepayu.Vendas.Service.VendasService.GetVendasRealizadas;
-import static br.ufal.ic.p2.wepayu.Vendas.Service.VendasService.LancaVenda;
+import static br.ufal.ic.p2.wepayu.ModuleEmpregado.Service.EmpregadoService.*;
+import static br.ufal.ic.p2.wepayu.ModuleFolhaDePagamento.Service.FolhaService.geraBalancoTotal;
+import static br.ufal.ic.p2.wepayu.ModuleCartaoDePonto.Service.ServiceCartaoDePonto.*;
+import static br.ufal.ic.p2.wepayu.ModuleSindicato.Service.SindicatoService.*;
+import static br.ufal.ic.p2.wepayu.ModuleVendas.Service.VendasService.GetVendasRealizadas;
+import static br.ufal.ic.p2.wepayu.ModuleVendas.Service.VendasService.LancaVenda;
 
 public class Facade {
     Sistema sistema = new Sistema();
@@ -34,13 +29,13 @@ public class Facade {
     public String getEmpregadoPorNome(String nome, int indice) throws Exception {
         return Sistema.Empregados.GetEmpregadoPorNome(nome, indice);
     }
-    public String getTaxasServico(String id, String dataInicial, String dataFinal) throws SindicatoExceptions {
+    public String getTaxasServico(String id, String dataInicial, String dataFinal) throws Exception {
         return GetTaxasServico(id,dataInicial,dataFinal);
     }
-    public String getVendasRealizadas(String emp, String dataInicial, String dataFinal) throws ExceptionVendas {
+    public String getVendasRealizadas(String emp, String dataInicial, String dataFinal) throws Exception {
         return GetVendasRealizadas(emp,dataInicial,dataFinal);
     }
-    public String getHorasNormaisTrabalhadas(String emp, String dataInicial, String dataFinal) throws ExceptionHoras {
+    public String getHorasNormaisTrabalhadas(String emp, String dataInicial, String dataFinal) throws Exception {
         return GetHorasNormaisTrabalhadas(emp,dataInicial,dataFinal);
     }
     public String getHorasExtrasTrabalhadas(String emp, String dataInicial, String dataFinal){
@@ -48,13 +43,13 @@ public class Facade {
     }
 
     //UPDATE
-    public void lancaCartao(String emp, String data, String horas) throws ExceptionHoras {
+    public void lancaCartao(String emp, String data, String horas) throws Exception {
         LancaCartao(emp,data,horas);
     }
-    public void lancaVenda(String emp, String data, String horas) throws ExceptionVendas {
+    public void lancaVenda(String emp, String data, String horas) throws Exception {
         LancaVenda(emp,data,horas);
     }
-    public void lancaTaxaServico(String idSindical, String data, String valor) throws SindicatoExceptions {
+    public void lancaTaxaServico(String idSindical, String data, String valor) throws Exception {
         LancaTaxaServico(idSindical,data,valor);
     }
     public void alteraEmpregado(String id, String atributo, String valor) throws Exception {
