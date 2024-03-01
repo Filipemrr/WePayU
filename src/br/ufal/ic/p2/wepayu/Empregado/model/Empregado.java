@@ -1,7 +1,4 @@
 package br.ufal.ic.p2.wepayu.Empregado.model;
-
-import br.ufal.ic.p2.wepayu.Empregado.Exception.EmpregadoException;
-//change aaaa
 public class Empregado {
     private String id;
     private String nome;
@@ -15,7 +12,9 @@ public class Empregado {
     private InformacoesBancarias informacoesBancarias;
     private boolean isRecebedorPorBanco = false;
 
-    public Empregado(String id, String nome, String endereco, String tipo, String salario) throws EmpregadoException {
+
+
+    public Empregado(String id, String nome, String endereco, String tipo, String salario) throws Exception {
         this.id = id;
         this.nome = nome;
         this.endereco = endereco;
@@ -23,7 +22,7 @@ public class Empregado {
         this.salario = salario;
         this.isSindicalizado = isSindicalizado;
     }
-    public Empregado(String id, String nome, String endereco, String tipo, String salario, String comissao) throws EmpregadoException {
+    public Empregado(String id, String nome, String endereco, String tipo, String salario, String comissao) throws Exception {
         this.id = id;
         this.nome = nome;
         this.endereco = endereco;

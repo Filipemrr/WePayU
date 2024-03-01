@@ -1,6 +1,6 @@
 package br.ufal.ic.p2.wepayu.Empregado.Service;
 import br.ufal.ic.p2.wepayu.CartaoDePonto.Model.ExceptionHoras;
-import br.ufal.ic.p2.wepayu.Empregado.Exception.EmpregadoException;
+import br.ufal.ic.p2.wepayu.Empregado.Exception.*;
 import br.ufal.ic.p2.wepayu.Empregado.model.Empregado;
 import br.ufal.ic.p2.wepayu.Empregado.model.InformacoesBancarias;
 import br.ufal.ic.p2.wepayu.Sindicato.Classes.MembroSindicato;
@@ -33,9 +33,9 @@ public class EmpregadoService {
     }
 
     //Create
-    public String AddEmpregado(String nome, String endereco, String tipo, String salario) throws EmpregadoException, ExceptionHoras {
+    public String AddEmpregado(String nome, String endereco, String tipo, String salario) throws Exception {
         if (tipo.equalsIgnoreCase("comissionado"))
-            throw new EmpregadoException("Tipo nao aplicavel.");
+            throw new TipoInvalido("Tipo nao aplicavel.");
         EmpregadoValidations.validarEmpregado(nome,endereco, tipo,salario);
         String id = GerarId();
         if (tipo.equalsIgnoreCase("horista"))
@@ -44,9 +44,9 @@ public class EmpregadoService {
         listaEmpregados.put(id,Empregado);
         return id;
     }
-    public String AddEmpregado(String nome, String endereco, String tipo, String salario, String ValorComissao) throws EmpregadoException {
+    public String AddEmpregado(String nome, String endereco, String tipo, String salario, String ValorComissao) throws  Exception {
         if (!tipo.equalsIgnoreCase("comissionado"))
-            throw new EmpregadoException("Tipo nao aplicavel.");
+            throw new TipoInvalido("Tipo nao aplicavel.");
 
         EmpregadoValidations.validarEmpregado(nome,endereco, tipo,salario,ValorComissao);
         String id = GerarId();
@@ -57,7 +57,7 @@ public class EmpregadoService {
     }
 
     //Read
-    public String GetEmpregadoPorNome(String nome, int indice) throws EmpregadoException {
+    public String GetEmpregadoPorNome(String nome, int indice) throws Exception {
         int i = 0;
         for (Empregado empregado : listaEmpregados.values()) {
             if (empregado.getNome().equals(nome))
@@ -67,17 +67,17 @@ public class EmpregadoService {
                 return empregado.getId();
             }
         }
-        throw new EmpregadoException("Nao ha empregado com esse nome.");
+        throw new NomeInvalido("Nao ha empregado com esse nome.");
     }
-    public String GetAtributoEmpregado(String id, String atributo) throws EmpregadoException {
+    public String GetAtributoEmpregado(String id, String atributo) throws Exception {
         validaGetAtributoEmpregado(id, atributo);
         Empregado empregado = listaEmpregados.get(id);
 
         if (id.isEmpty())
-            throw new EmpregadoException("Identificacao do empregado nao pode ser nula.");
+            throw new IDinvalido("Identificacao do empregado nao pode ser nula.");
 
         if (empregado == null)
-            throw new EmpregadoException("Empregado nao existe.");
+            throw new EmpregadoNaoExiste("Empregado nao existe.");
 
         if (atributo.equals("nome")) {
             return empregado.getNome();
@@ -116,7 +116,7 @@ public class EmpregadoService {
             if (empregado.getTipo().equalsIgnoreCase("comissionado"))
                 return empregado.getComissao();
 
-            throw new EmpregadoException("Empregado nao eh comissionado.");
+            throw new EmpregadonaoEhComissionado("Empregado nao eh comissionado.");
         }
 
         if (atributo.equals("metodoPagamento")) {
@@ -125,7 +125,7 @@ public class EmpregadoService {
 
         if (atributo.equalsIgnoreCase("idSindicato") || atributo.equalsIgnoreCase("taxaSindical")) {
             if(!empregado.getIsSindicalizado())
-                throw new EmpregadoException("Empregado nao eh sindicalizado.");
+                throw new EmpregadoNaoEhSindicalizado("Empregado nao eh sindicalizado.");
 
             MembroSindicato sindicalista = listaDeSindicalizados.get(id);
             if (atributo.equals("idSindicato")) return sindicalista.getIdSindical();
@@ -134,19 +134,19 @@ public class EmpregadoService {
 
         if (atributo.equalsIgnoreCase("banco") || atributo.equalsIgnoreCase("agencia") || atributo.equalsIgnoreCase("contaCorrente") || atributo.equalsIgnoreCase("valor"))
             if (!empregado.isRecebedorPorBanco())
-                throw new EmpregadoException("Empregado nao recebe em banco.");
+                throw new MetodoDePagamentoInvalido("Empregado nao recebe em banco.");
             else
                 return empregado.getInformacaoBancaria(atributo);
 
-        throw new EmpregadoException("Atributo nao existe.");
+        throw new AtributoInvalido("Atributo nao existe.");
     }
 
     //UPDATE
-    public static void AlteraDefaultAtributoEmpregado(String id, String atributo, String valor) throws EmpregadoException {
+    public static void AlteraDefaultAtributoEmpregado(String id, String atributo, String valor) throws Exception {
         validaAtributosDefaultUpdate(id, atributo, valor);
         Empregado empregadoAtualizado = listaEmpregados.get(id);
         if (empregadoAtualizado == null) {
-            throw new EmpregadoException("Empregado não encontrado");
+            throw new EmpregadoNaoExiste("Empregado não encontrado");
         }
         if (atributo.equalsIgnoreCase("nome")) {
             empregadoAtualizado.setNome(valor);
@@ -166,7 +166,7 @@ public class EmpregadoService {
 
         else if (atributo.equalsIgnoreCase("metodoPagamento")){
             if (!valor.equalsIgnoreCase("correios") && !valor.equalsIgnoreCase("emMaos") && !valor.equalsIgnoreCase("banco"))
-                throw new EmpregadoException("Metodo de pagamento invalido.");
+                throw new MetodoDePagamentoInvalido("Metodo de pagamento invalido.");
             if (!valor.equalsIgnoreCase("banco"))
                 empregadoAtualizado.setisRecebedorPorBanco(false);
             empregadoAtualizado.setMetodoDePagamento(valor);
@@ -178,13 +178,13 @@ public class EmpregadoService {
             if (valor.equalsIgnoreCase("false"))
                 empregadoAtualizado.SetisSindicalizado(false);
             else
-                throw new EmpregadoException("Valor invalido");
+                throw new ValorInvalido("Valor invalido");
         }
 
 
         listaEmpregados.put(id, empregadoAtualizado);
     }
-    public static void AlteraMetodoPagamentoEmpregado(String id, String atributo, String valor1, String banco, String agencia, String contaCorrente) throws EmpregadoException {
+    public static void AlteraMetodoPagamentoEmpregado(String id, String atributo, String valor1, String banco, String agencia, String contaCorrente) throws Exception {
         validaBanco(id,atributo,valor1,banco,agencia,contaCorrente);
         Empregado empregadoAtualizado = listaEmpregados.get(id);
         InformacoesBancarias infosBancariasEmpregado = new InformacoesBancarias(valor1,banco,agencia,contaCorrente);
@@ -193,16 +193,16 @@ public class EmpregadoService {
         empregadoAtualizado.setisRecebedorPorBanco(true);
         listaEmpregados.put(id,empregadoAtualizado);
     }
-    public static void AlteraEmpregadoComissionado(String id, String atributo, String valor) throws EmpregadoException {
+    public static void AlteraEmpregadoComissionado(String id, String atributo, String valor) throws Exception {
         Empregado empregado = listaEmpregados.get(id);
         if (empregado.getTipo().equals("comissionado")){
             empregado.setComissao(valor);
             listaEmpregados.put(id,empregado);
         }
         else
-            throw new EmpregadoException("Empregado nao eh comissionado.");
+            throw new EmpregadonaoEhComissionado("Empregado nao eh comissionado.");
     }
-    public static void AlteraEmpregadoSindicato(String id, String atributo, String valor) throws EmpregadoException {
+    public static void AlteraEmpregadoSindicato(String id, String atributo, String valor) throws Exception {
         Empregado empregado = listaEmpregados.get(id);
         if (valor.equalsIgnoreCase("false"))
             empregado.SetisSindicalizado(false);
@@ -211,9 +211,9 @@ public class EmpregadoService {
             empregado.SetisSindicalizado(true);
 
         if (!empregado.getTipo().equalsIgnoreCase("comissionado"))
-            throw new EmpregadoException("Empregado nao eh sindicalizado.");
+            throw new EmpregadoNaoEhSindicalizado("Empregado nao eh sindicalizado.");
     }
-    public static void ComissionaEmpregado(String id, String atributo, String valor,String comissao) throws EmpregadoException {
+    public static void ComissionaEmpregado(String id, String atributo, String valor,String comissao) throws  Exception{
         Empregado empregado = listaEmpregados.get(id);
         if (valor.equalsIgnoreCase("comissionado")){
                 empregado.setTipo("comissionado");
@@ -226,7 +226,7 @@ public class EmpregadoService {
             }
     }
 
-    public static void SindicalizaEmpregado(String id, String atributo, String valor, String idSindical, String taxaSindical) throws SindicatoExceptions, EmpregadoException {
+    public static void SindicalizaEmpregado(String id, String atributo, String valor, String idSindical, String taxaSindical) throws Exception {
         validaSindicalizacao(id,atributo,valor,idSindical,taxaSindical);
         alteraEmpregadoValidation(idSindical);
         Empregado empregado = listaEmpregados.get(id);
@@ -237,7 +237,7 @@ public class EmpregadoService {
 
 
     //DELETE
-    public void removerEmpregado(String id) throws EmpregadoException {
+    public void removerEmpregado(String id) throws Exception {
         validaRemocao(id);
         listaEmpregados.remove(id);
     }

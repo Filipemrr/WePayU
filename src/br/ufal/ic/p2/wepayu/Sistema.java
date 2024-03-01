@@ -14,8 +14,9 @@ public class Sistema {
     static EmpregadoService Empregados = new EmpregadoService();
     public static HashMap<String, CartaoDePonto> listaDeCartoes = new HashMap<>();
     public static HashMap<String, MembroSindicato> listaDeSindicalizados = new HashMap<>();
-    public static HashMap<String, Vendas> listaDeVendedores = new HashMap<>();
 
+    public static HashMap<String, Vendas> listaDeVendedores = new HashMap<>();
+    // <ID do vendedor, Venda> e Vendas -> possui Venda<Data,Valor> das vendas desse empregado
     public void zerarSistema(){
         listaEmpregados.clear();
         listaDeCartoes.clear();
